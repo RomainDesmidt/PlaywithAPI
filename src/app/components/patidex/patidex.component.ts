@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiGardenService } from 'src/app/services/api-gardens.service';
+import { Location } from 'src/app/location';
 
 @Component({
   selector: 'app-patidex',
@@ -10,17 +11,17 @@ export class PatidexComponent implements OnInit {
 
   constructor(private apiGardenService: ApiGardenService) { }
 
-  locations: any
-  status = "loading"
+  locations?: Location[];
+  status: string = "loading";
 
-  getLocations() {
+  getLocations(): void {
     this.apiGardenService.GetGardenList().subscribe({
-      next: modifiedResponse => {
+      next: (modifiedResponse: Location[]) => {
         console.log(modifiedResponse)
         this.locations = modifiedResponse
         this.status = 'ready'
       },
-      error: error => {
+      error: (error: string) => {
         console.error(error)
       }
     });  
